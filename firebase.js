@@ -1,8 +1,8 @@
-import { initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
-import { getStorage } from 'firebase/storage';
+import { initializeApp } from "firebase/app";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithGoogleRedirect, GoogleAuthProvider } from "firebase/auth";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { getFirestore, collection, addDoc, getDocs, onSnapshot, updateDoc, doc } from "firebase/firestore";
 
-// Replace with your actual Firebase project configuration
 const firebaseConfig = {
     apiKey: process.env.FIREBASE_API_KEY,
     authDomain: process.env.FIREBASE_AUTH_DOMAIN,
@@ -15,7 +15,29 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const storage = getStorage(app);
 
-export { auth, storage };
+export const auth = getAuth(app);
+export const storage = getStorage(app);
+export const db = getFirestore(app);
+
+// Function for uploading images to Firebase Storage
+export const uploadImage = async (image, imageName) => {
+  const imageRef = ref(storage, `images/${imageName}`);
+  await uploadBytes(imageRef, image);
+  const imageUrl = await getDownloadURL(imageRef);
+  return imageUrl;
+};
+
+// Function for fetching image URLs from Firestore
+export const getImages = async () => {
+  const imagesRef = collection(db, "images");
+  const querySnapshot = await getDocs(imagesRef);
+  const images = querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
+  return images;
+};
+
+// Function for tracking image selections (to be implemented in imageSelection.js)
+export const trackSelection = async (imageId, userId, selected) => {
+  const imageRef = doc(db, "images", imageId);
+  await updateDoc(imageRef, { selectedUsers: selected ? [...selectedUsers, userId] : selectedUsers.filter(id => id !== userId) });
+};

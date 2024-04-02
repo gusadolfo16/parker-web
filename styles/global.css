@@ -1,49 +1,62 @@
 /* General styles */
 body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    font-size: 16px;
-    line-height: 1.5;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+      Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    color: #333;
   }
   
-  /* Navigation bar */
+  /* Navigation bar styles (assuming a simple navbar) */
   nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem;
+    padding: 1rem 2rem;
     background-color: #f5f5f5;
   }
   
-  nav a {
-    color: black;
-    text-decoration: none;
-    padding: 0.5rem 1rem;
-  }
-  
-  /* Gallery */
+  /* Gallery grid styles */
   .gallery {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 1rem;
+    margin: 1rem;
   }
   
-  .image-card {
-    background-color: #fff; /* Set card background color */
-    border: 1px solid #ddd; /* Add a thin border */
-    padding: 10px; /* Adjust padding */
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    transition: all 0.2s ease-in-out; /* Add a smooth transition effect */
+  .gallery-item {
+    border: 1px solid #ddd;
+    padding: 1rem;
+    cursor: pointer;
+    position: relative; /* For opacity adjustments */
   }
   
-  .image-card:hover { /* Styles on hover (optional) */
-    opacity: 0.8; /* Slightly reduce opacity on hover */
-    transform: scale(1.02); /* Slight zoom effect */
+  .gallery-item img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
   }
   
-  .image {
-    width: 100%; /* Ensure image fills the card */
-    height: auto; /* Maintain aspect ratio */
-    object-fit: cover; /* Cover the card area */
+  /* Filter bar styles (assuming a simple filter bar) */
+  .filter-bar {
+    margin-bottom: 1rem;
+  }
+  
+  .filter-bar h3 {
+    margin-bottom: 1rem;
+  }
+  
+  .filter-bar ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .filter-bar li {
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Optional: Adjust opacity for selected images */
+  .gallery-item.selected {
+    opacity: 0.5; /* Adjust opacity as needed */
   }
   

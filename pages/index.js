@@ -1,21 +1,25 @@
-import React from 'react';
-import Gallery from '../components/Gallery';
-import { getImages } from '../utils/imageSelection'; // Get images from Firestore
+import { useContext, useState, useEffect } from "react";
+import { getImages } from "../firebase";
+import Gallery from "../components/Gallery";
+import AuthContext from "../_app.js"; // Import AuthContext
 
-const Home = ({ images }) => {
+const Home = () => {
+  const currentUser = useContext(AuthContext);
+  const [images, setImages] = useState([]);
+
+  useEffect(() => {
+    const fetchImages = async () => {
+      const fetchedImages = await getImages();
+      setImages(fetchedImages);
+    };
+    fetchImages();
+  }, []);
+
   return (
     <div>
-      <h1>Parker Web Gallery</h1>
-      <Gallery images={images} />
+      {currentUser ? <Gallery images={images} /> : <h1>Please login to access the gallery.</h1>}
     </div>
   );
 };
-
-export async function getStaticProps() {
-  const images = await getImages(); // Fetch image data from Firestore
-  return {
-    props: { images },
-  };
-}
 
 export default Home;

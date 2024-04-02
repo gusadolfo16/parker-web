@@ -1,30 +1,29 @@
-import React from 'react';
-import Image from 'next/image';
+import { styled } from "@emotion/styled";
+import { Image } from "next/image";
 
-const ImageGrid = ({ images, onImageSelect, onImageUnselect }) => {
+const ImageGridContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  justify-content: center; /* Center image thumbnails horizontally */
+`;
+
+const ImageGridItem = styled.div`
+  border: 1px solid #ddd;
+  padding: 1rem;
+  cursor: pointer;
+  opacity: ${props => props.isSelected ? 0.5 : 1}; /* Reduce opacity for selected images */
+`;
+
+const ImageGrid = ({ images, selectedImages, onImageSelect }) => {
   return (
-    <div className="image-grid">
-      {images.map((image) => (
-        <div key={image.id} className="image-card">
-          <Image
-            src={image.url}
-            alt={image.alt}
-            width={200} // Adjust width as needed
-            height={200} // Adjust height as needed
-            layout="fill"
-            objectFit="cover" // Adjust objectFit as needed
-            className="image"
-          />
-          <div className="image-actions">
-            {image.selectedBy ? (
-              <button onClick={() => onImageUnselect(image.id)}>Unblock</button>
-            ) : (
-              <button onClick={() => onImageSelect(image.id)}>Select</button>
-            )}
-          </div>
-        </div>
+    <ImageGridContainer>
+      {images.map(image => (
+        <ImageGridItem key={image.id} isSelected={selectedImages.includes(image.id)} onClick={() => onImageSelect(image.id, !selectedImages.includes(image.id))}>
+          <Image src={image.imageUrl} alt={image.name} layout="fill" objectFit="cover" />
+        </ImageGridItem>
       ))}
-    </div>
+    </ImageGridContainer>
   );
 };
 
