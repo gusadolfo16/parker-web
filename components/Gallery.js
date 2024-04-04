@@ -27,6 +27,11 @@ const Gallery = () => {
     });
   };
 
+  const handleFilterChange = () => {
+    // do nothing
+    console.log('')
+  }
+
   return (
     <div className="gallery">
       {<FilterBar onFilterChange={handleFilterChange} />} {/* Include FilterBar if needed */}

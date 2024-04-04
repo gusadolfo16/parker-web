@@ -1,5 +1,6 @@
-import { styled } from "@emotion/styled";
+// import { styled } from "@emotion/styled";
 import { Image } from "next/image";
+import {styled} from "styled-components"
 
 const ImageGridContainer = styled.div`
   display: grid;
@@ -18,6 +19,7 @@ const ImageGridItem = styled.div`
 const ImageGrid = ({ images, selectedImages, onImageSelect }) => {
   return (
     <ImageGridContainer>
+      <h1>image grid</h1>
       {images.map(image => (
         <ImageGridItem key={image.id} isSelected={selectedImages.includes(image.id)} onClick={() => onImageSelect(image.id, !selectedImages.includes(image.id))}>
           <Image src={image.imageUrl} alt={image.name} layout="fill" objectFit="cover" />

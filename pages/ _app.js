@@ -1,10 +1,10 @@
 import { createContext, useState, useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "./firebase";
+import { auth } from "../firebase";
 
-const AuthContext = createContext(null);
+export const AuthContext = createContext();
 
-const MyApp = ({ Component, pageProps }) => {
+export const MyApp = ({ Component, pageProps }) => {
   const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
@@ -19,4 +19,4 @@ const MyApp = ({ Component, pageProps }) => {
   );
 };
 
-export default MyApp;
+// export default MyApp;

@@ -1,10 +1,10 @@
 import { useContext, useState, useEffect } from "react";
 import { getImages } from "../firebase";
 import Gallery from "../components/Gallery";
-import AuthContext from "../_app.js"; // Import AuthContext
+//import {AuthContext} from "../_app.js"; // Import AuthContext
 
 const Home = () => {
-  const currentUser = useContext(AuthContext);
+  const currentUser = null// useContext(AuthContext);
   const [images, setImages] = useState([]);
 
   useEffect(() => {
