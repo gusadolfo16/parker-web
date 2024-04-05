@@ -1,6 +1,8 @@
 // import { styled } from "@emotion/styled";
 import { Image } from "next/image";
+import { useContext } from "react";
 import {styled} from "styled-components"
+import { AppContext } from "./Context";
 
 const ImageGridContainer = styled.div`
   display: grid;
@@ -17,15 +19,20 @@ const ImageGridItem = styled.div`
 `;
 
 const ImageGrid = ({ images, selectedImages, onImageSelect }) => {
+  const {currentUser} = useContext(AppContext)
+  console.log('ImageGrid:',currentUser)
   return (
-    <ImageGridContainer>
+    <>
+      <h1>user: {currentUser?.email} </h1>
       <h1>image grid</h1>
+      <ImageGridContainer>
       {images.map(image => (
         <ImageGridItem key={image.id} isSelected={selectedImages.includes(image.id)} onClick={() => onImageSelect(image.id, !selectedImages.includes(image.id))}>
           <Image src={image.imageUrl} alt={image.name} layout="fill" objectFit="cover" />
         </ImageGridItem>
       ))}
     </ImageGridContainer>
+    </>
   );
 };
 

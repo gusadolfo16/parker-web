@@ -2,10 +2,14 @@ import { useState, useEffect } from "react";
 import { getImages } from "../firebase";
 import ImageGrid from "./ImageGrid";
 import FilterBar from "./FilterBar"; // Import FilterBar if needed
+import { AppContext } from "./Context";
 
 const Gallery = () => {
   const [images, setImages] = useState([]);
   const [selectedImages, setSelectedImages] = useState([]); // Track selected images
+
+  const {currentUser, setCurrentUser} = useContext(AppContext)
+  const router = useRouter()
 
   useEffect(() => {
     const fetchImages = async () => {
@@ -32,10 +36,20 @@ const Gallery = () => {
     console.log('')
   }
 
+  const handleLogout = () => {
+    if (currentUser){
+      //setCurrentUser(null)
+    }
+    router.push('/')
+  }
+
   return (
     <div className="gallery">
       {<FilterBar onFilterChange={handleFilterChange} />} {/* Include FilterBar if needed */}
       <ImageGrid images={images} selectedImages={selectedImages} onImageSelect={handleImageSelection} />
+      <button type="button" onClick={() => handleLogout()}>
+        logout
+      </button>
     </div>
   );
 };

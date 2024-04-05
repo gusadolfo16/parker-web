@@ -1,10 +1,12 @@
 import { useContext, useState, useEffect } from "react";
 import { getImages } from "../firebase";
 import Gallery from "../components/Gallery";
-//import {AuthContext} from "../_app.js"; // Import AuthContext
+import {AppContext, AppProvider} from '../components/Context'
+import Link from 'next/link'
+
 
 const Home = () => {
-  const currentUser = null// useContext(AuthContext);
+  const {currentUser} = useContext(AppContext);
   const [images, setImages] = useState([]);
 
   useEffect(() => {
@@ -15,10 +17,24 @@ const Home = () => {
     fetchImages();
   }, []);
 
+  console.log('home:', currentUser)
+
+  const renderLogin = () => {
+    return (
+      <>
+        <h1>Please login to access the gallery.</h1>
+        <Link href="/login">Login</Link>
+      </>
+    )
+  }
+
   return (
-    <div>
-      {currentUser ? <Gallery images={images} /> : <h1>Please login to access the gallery.</h1>}
-    </div>
+    <AppProvider>
+      <div>
+        {currentUser ? <Gallery images={images} /> : renderLogin()}
+      </div>
+    </AppProvider>
+    
   );
 };
 
