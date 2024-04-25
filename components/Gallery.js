@@ -1,14 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { getImages } from "../firebase";
 import ImageGrid from "./ImageGrid";
 import FilterBar from "./FilterBar"; // Import FilterBar if needed
-import { AppContext } from "./Context";
+import {MyContext} from "../context";
+import { useRouter } from "next/navigation";
+
 
 const Gallery = () => {
   const [images, setImages] = useState([]);
   const [selectedImages, setSelectedImages] = useState([]); // Track selected images
 
-  const {currentUser, setCurrentUser} = useContext(AppContext)
+  const {currentUser, setCurrentUser} = useContext(MyContext)
   const router = useRouter()
 
   useEffect(() => {
@@ -38,7 +40,7 @@ const Gallery = () => {
 
   const handleLogout = () => {
     if (currentUser){
-      //setCurrentUser(null)
+      setCurrentUser(null)
     }
     router.push('/')
   }

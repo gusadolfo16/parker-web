@@ -1,13 +1,14 @@
+'use client';
 import { useContext, useState, useEffect } from "react";
 import { getImages } from "../firebase";
 import Gallery from "../components/Gallery";
-import {AppContext, AppProvider} from '../components/Context'
 import Link from 'next/link'
+import {MyContext} from "../context";
 
 
 const Home = () => {
-  const {currentUser} = useContext(AppContext);
-  const [images, setImages] = useState([]);
+  const {currentUser} = useContext(MyContext);
+  const [images, setImages] = useState<{ id: string; }[]>([]);
 
   useEffect(() => {
     const fetchImages = async () => {
@@ -17,7 +18,7 @@ const Home = () => {
     fetchImages();
   }, []);
 
-  console.log('home:', currentUser)
+  console.log('home:', currentUser, images)
 
   const renderLogin = () => {
     return (
@@ -29,12 +30,9 @@ const Home = () => {
   }
 
   return (
-    <AppProvider>
-      <div>
-        {currentUser ? <Gallery images={images} /> : renderLogin()}
-      </div>
-    </AppProvider>
-    
+    <div>
+      {currentUser ? <Gallery /> : renderLogin()}
+    </div>
   );
 };
 

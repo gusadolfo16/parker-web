@@ -2,7 +2,7 @@
 import { Image } from "next/image";
 import { useContext } from "react";
 import {styled} from "styled-components"
-import { AppContext } from "./Context";
+import { MyContext } from "../context";
 
 const ImageGridContainer = styled.div`
   display: grid;
@@ -19,11 +19,11 @@ const ImageGridItem = styled.div`
 `;
 
 const ImageGrid = ({ images, selectedImages, onImageSelect }) => {
-  const {currentUser} = useContext(AppContext)
+  const {currentUser} = useContext(MyContext)
   console.log('ImageGrid:',currentUser)
   return (
     <>
-      <h1>user: {currentUser?.email} </h1>
+      <h1>user: {currentUser?.user} </h1>
       <h1>image grid</h1>
       <ImageGridContainer>
       {images.map(image => (

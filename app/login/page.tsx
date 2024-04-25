@@ -1,22 +1,23 @@
+'use client';
 import { useState, useContext } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase";
-import { AppContext } from "../components/Context"
-import { useRouter } from 'next/router'
+import { auth } from "../../firebase";
+import { useRouter } from 'next/navigation'
+import  MyContext  from "../../context";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter()
 
-  const {setCurrentUser} = useContext(AppContext)
+  const {setCurrentUser} = useContext(MyContext)
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     try {
       console.log(email, password)
       // await signInWithEmailAndPassword(auth, email, password);
-      //setCurrentUser({user: email})
+      setCurrentUser({user: email})
       router.push('/')
     } catch (error) {
       console.error(error);
